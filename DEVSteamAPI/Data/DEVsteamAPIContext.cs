@@ -11,12 +11,15 @@ namespace DEVSteamAPI.Data
         {
         }
 
+        public DbSet<CadastroDeJogos> CadastroDeJogos { get; set; }
+        public DbSet<Categoria> Categoria { get; set; }
         //sobrescre o metodo OnModelCreating
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<CadastroDeJogos>().ToTable("CadastroDeJogos");
+            modelBuilder.Entity<Categoria>().ToTable("Categoria");
         }
 
-        public DbSet<CadastroDeJogos> CadastroDeJogos { get; set; }
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DEVSteamAPI.Migrations
 {
     [DbContext(typeof(DEVsteamAPIContext))]
-    [Migration("20250205171454_initial")]
-    partial class initial
+    [Migration("20250205180215_DEVSteam")]
+    partial class DEVSteam
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,30 +27,47 @@ namespace DEVSteamAPI.Migrations
 
             modelBuilder.Entity("DEVSteamAPI.Model.CadastroDeJogos", b =>
                 {
-                    b.Property<int>("CadastroDeJogosId")
+                    b.Property<Guid>("CadastroDeJogosId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CadastroDeJogosId"));
+                    b.Property<Guid>("CategoriaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Classificacao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("criador")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("descricao")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("price")
-                        .HasColumnType("int");
-
                     b.HasKey("CadastroDeJogosId");
 
-                    b.ToTable("CadastroDeJogos");
+                    b.HasIndex("CategoriaId");
+
+                    b.ToTable("CadastroDeJogos", (string)null);
+                });
+
+            modelBuilder.Entity("DEVSteamAPI.Model.Categoria", b =>
+                {
+                    b.Property<Guid>("CategoriaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CategoriaName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategoriaId");
+
+                    b.ToTable("Categoria", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -249,6 +266,17 @@ namespace DEVSteamAPI.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("DEVSteamAPI.Model.CadastroDeJogos", b =>
+                {
+                    b.HasOne("DEVSteamAPI.Model.Categoria", "Categoria")
+                        .WithMany()
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categoria");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

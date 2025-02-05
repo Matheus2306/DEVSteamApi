@@ -30,7 +30,7 @@ namespace DEVSteamAPI.Controllers
 
         // GET: api/CadastroDeJogos/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CadastroDeJogos>> GetCadastroDeJogos(int id)
+        public async Task<ActionResult<CadastroDeJogos>> GetCadastroDeJogos(Guid id)
         {
             var cadastroDeJogos = await _context.CadastroDeJogos.FindAsync(id);
 
@@ -45,7 +45,7 @@ namespace DEVSteamAPI.Controllers
         // PUT: api/CadastroDeJogos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCadastroDeJogos(int id, CadastroDeJogos cadastroDeJogos)
+        public async Task<IActionResult> PutCadastroDeJogos(Guid id, CadastroDeJogos cadastroDeJogos)
         {
             if (id != cadastroDeJogos.CadastroDeJogosId)
             {
@@ -86,7 +86,7 @@ namespace DEVSteamAPI.Controllers
 
         // DELETE: api/CadastroDeJogos/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCadastroDeJogos(int id)
+        public async Task<IActionResult> DeleteCadastroDeJogos(Guid id)
         {
             var cadastroDeJogos = await _context.CadastroDeJogos.FindAsync(id);
             if (cadastroDeJogos == null)
@@ -100,7 +100,7 @@ namespace DEVSteamAPI.Controllers
             return NoContent();
         }
 
-        private bool CadastroDeJogosExists(int id)
+        private bool CadastroDeJogosExists(Guid id)
         {
             return _context.CadastroDeJogos.Any(e => e.CadastroDeJogosId == id);
         }

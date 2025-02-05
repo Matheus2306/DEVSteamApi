@@ -4,6 +4,7 @@ using DEVSteamAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DEVSteamAPI.Migrations
 {
     [DbContext(typeof(DEVsteamAPIContext))]
-    partial class DEVsteamAPIContextModelSnapshot : ModelSnapshot
+    [Migration("20250205175231_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,7 +52,7 @@ namespace DEVSteamAPI.Migrations
 
                     b.HasIndex("CategoriaId");
 
-                    b.ToTable("CadastroDeJogos", (string)null);
+                    b.ToTable("CadastroDeJogos");
                 });
 
             modelBuilder.Entity("DEVSteamAPI.Model.Categoria", b =>
@@ -64,7 +67,7 @@ namespace DEVSteamAPI.Migrations
 
                     b.HasKey("CategoriaId");
 
-                    b.ToTable("Categoria", (string)null);
+                    b.ToTable("Categoria");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

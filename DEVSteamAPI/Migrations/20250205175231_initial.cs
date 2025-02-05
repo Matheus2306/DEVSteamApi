@@ -51,19 +51,15 @@ namespace DEVSteamAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CadastroDeJogos",
+                name: "Categoria",
                 columns: table => new
                 {
-                    CadastroDeJogosId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    price = table.Column<int>(type: "int", nullable: false),
-                    descricao = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    criador = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    CategoriaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CategoriaName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CadastroDeJogos", x => x.CadastroDeJogosId);
+                    table.PrimaryKey("PK_Categoria", x => x.CategoriaId);
                 });
 
             migrationBuilder.CreateTable(
@@ -172,6 +168,28 @@ namespace DEVSteamAPI.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CadastroDeJogos",
+                columns: table => new
+                {
+                    CadastroDeJogosId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Classificacao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CategoriaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CadastroDeJogos", x => x.CadastroDeJogosId);
+                    table.ForeignKey(
+                        name: "FK_CadastroDeJogos_Categoria_CategoriaId",
+                        column: x => x.CategoriaId,
+                        principalTable: "Categoria",
+                        principalColumn: "CategoriaId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -210,6 +228,11 @@ namespace DEVSteamAPI.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CadastroDeJogos_CategoriaId",
+                table: "CadastroDeJogos",
+                column: "CategoriaId");
         }
 
         /// <inheritdoc />
@@ -238,6 +261,9 @@ namespace DEVSteamAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Categoria");
         }
     }
 }

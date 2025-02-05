@@ -2,10 +2,12 @@
 {
     public class CadastroDeJogos
     {
-        public int CadastroDeJogosId { get; set; }
+        public Guid CadastroDeJogosId { get; set; }
         public string Name { get; set; }
-        public int price { get; set; }
-        public string descricao { get; set; }
-        public string criador { get; set; }
+        public string Classificacao { get; set; }
+        public string? Description { get; set; }
+        public string? Image { get; set; }
+        public Guid CategoriaId { get; set; }
+        public Categoria? Categoria { get; set; }
     }
 }
