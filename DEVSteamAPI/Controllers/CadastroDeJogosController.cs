@@ -7,11 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DEVSteamAPI.Data;
 using DEVSteamAPI.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DEVSteamAPI.Controllers
 {
+    //[AllowAnonymous] serve pra liberar acesso a uma função especifica ou permitir acesso total a todos
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CadastroDeJogosController : ControllerBase
     {
         private readonly DEVsteamAPIContext _context;

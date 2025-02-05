@@ -12,6 +12,7 @@ namespace DEVSteamAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class CategoriasController : ControllerBase
     {
         private readonly DEVsteamAPIContext _context;
