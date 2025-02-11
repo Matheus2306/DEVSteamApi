@@ -20,6 +20,8 @@ namespace DEVSteamAPI.Data
             modelBuilder.Entity<CadastroDeJogos>().ToTable("CadastroDeJogos");
             modelBuilder.Entity<Categoria>().ToTable("Categoria");
         }
+        public DbSet<DEVSteamAPI.Model.ItemCarrinho> ItemCarrinho { get; set; } = default!;
+        public DbSet<DEVSteamAPI.Model.Carrinho> Carrinho { get; set; } = default!;
 
     }
 }

@@ -25,6 +25,7 @@ namespace DEVSteamAPI.Controllers
         }
 
         // GET: api/CadastroDeJogos
+        // Retorna todos os jogos cadastrados
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CadastroDeJogos>>> GetCadastroDeJogos()
         {
@@ -32,6 +33,7 @@ namespace DEVSteamAPI.Controllers
         }
 
         // GET: api/CadastroDeJogos/5
+        // Retorna um jogo específico pelo ID
         [HttpGet("{id}")]
         public async Task<ActionResult<CadastroDeJogos>> GetCadastroDeJogos(Guid id)
         {
@@ -45,8 +47,26 @@ namespace DEVSteamAPI.Controllers
             return cadastroDeJogos;
         }
 
+        // GET: api/CadastroDeJogos/byname
+        // Retorna jogos que correspondem ao nome fornecido
+        [HttpGet("byname")]
+        public async Task<ActionResult<IEnumerable<CadastroDeJogos>>> GetCadastroDeJogosByName(string name)
+        {
+            var jogos = await _context.CadastroDeJogos
+                .Where(j => j.Name.Contains(name))
+                .ToListAsync();
+
+            if (jogos == null || !jogos.Any())
+            {
+                return NotFound();
+            }
+
+            return jogos;
+        }
+
         // PUT: api/CadastroDeJogos/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // Atualiza um jogo existente pelo ID
+        // Para proteger contra ataques de overposting, veja https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCadastroDeJogos(Guid id, CadastroDeJogos cadastroDeJogos)
         {
@@ -77,7 +97,8 @@ namespace DEVSteamAPI.Controllers
         }
 
         // POST: api/CadastroDeJogos
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // Cria um novo jogo
+        // Para proteger contra ataques de overposting, veja https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<CadastroDeJogos>> PostCadastroDeJogos(CadastroDeJogos cadastroDeJogos)
         {
@@ -88,6 +109,7 @@ namespace DEVSteamAPI.Controllers
         }
 
         // DELETE: api/CadastroDeJogos/5
+        // Deleta um jogo existente pelo ID
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCadastroDeJogos(Guid id)
         {
@@ -103,6 +125,7 @@ namespace DEVSteamAPI.Controllers
             return NoContent();
         }
 
+        // Método auxiliar para verificar se um jogo existe pelo ID
         private bool CadastroDeJogosExists(Guid id)
         {
             return _context.CadastroDeJogos.Any(e => e.CadastroDeJogosId == id);
